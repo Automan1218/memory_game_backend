@@ -33,4 +33,15 @@ public class UserController : ControllerBase
         
         return Ok(response);
     }
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] UserRequest.Create request)
+    {
+        // 调用服务层处理注册逻辑
+        var response = await _userService.Create(request);
+
+        // 返回结果
+        return CreatedAtAction(nameof(GetById), new { UserId = response.UserId }, response);
+    }
+
 }

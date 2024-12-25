@@ -35,8 +35,13 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // Add Database Context
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//    options.UseMySQL(builder.Configuration.GetConnectionString("Database")));
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySQL(builder.Configuration.GetConnectionString("Database")));
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("Database"),
+        new MySqlServerVersion(new Version(8, 0, 39)) // Ìæ»»ÎªÄãµÄ MySQL °æ±¾
+    ));
 
 // Dependency Injection of Repositories and Services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
